@@ -1,0 +1,8 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\user\\Documents\\AI_GENERATIVE_LEARNING_DOCUMENT\\HyrateWatch\\backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [24924] using WatchFiles
+INFO:     Started server process [26684]
+INFO:     Waiting for application startup.
+2026-01-21 03:57:26,328 - hydratewatch - INFO - HydrateWatch API starting up...
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app\main.py'. Reloading...

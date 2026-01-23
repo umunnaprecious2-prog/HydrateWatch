@@ -1,0 +1,246 @@
+
+> hydratewatch-frontend@1.0.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3002
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 10.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 22.4s (752 modules)
+ GET / 200 in 23098ms
+ ✓ Compiled in 13.4s (752 modules)
+ ✓ Compiled in 492ms (348 modules)
+ ✓ Compiled in 796ms (348 modules)
+ ✓ Compiled in 558ms (348 modules)
+ ✓ Compiled in 563ms (348 modules)
+ ✓ Compiled in 828ms (348 modules)
+ ✓ Compiled in 1167ms (348 modules)
+ ✓ Compiled in 479ms (348 modules)
+ ✓ Compiled in 503ms (348 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 833ms (720 modules)
+ GET /login 200 in 1444ms
+ ✓ Compiled / in 343ms (404 modules)
+ GET / 200 in 638ms
+ GET / 200 in 75ms
+ ✓ Compiled in 1876ms (353 modules)
+ ✓ Compiled in 434ms (353 modules)
+ ✓ Compiled in 895ms (352 modules)
+ ✓ Compiled in 380ms (352 modules)
+ ✓ Compiled in 596ms (352 modules)
+ ✓ Compiled in 278ms (352 modules)
+ ✓ Compiled in 1086ms (352 modules)
+ ✓ Compiled in 415ms (352 modules)
+ ✓ Compiled in 411ms (352 modules)
+ ✓ Compiled in 398ms (352 modules)
+ ✓ Compiled in 882ms (352 modules)
+ ✓ Compiled in 729ms (352 modules)
+ ✓ Compiled in 693ms (352 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 3.6s (380 modules)
+ GET /login 200 in 4048ms
+ ✓ Compiled / in 288ms (410 modules)
+ GET / 200 in 983ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 795ms (754 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1449ms (757 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/316f0e58fd582234.webpack.hot-update.json 404 in 1616ms
+ GET /register 200 in 130ms
+ GET / 200 in 168ms
+ ✓ Compiled in 2.4s (768 modules)
+ ✓ Compiled in 546ms (354 modules)
+ ✓ Compiled in 355ms (354 modules)
+ ✓ Compiled in 2s (768 modules)
+ ✓ Compiled in 2.2s (768 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1904ms (757 modules)
+ GET /register 200 in 541ms
+ GET /register 200 in 73ms
+ GET /register 200 in 45ms
+ GET / 200 in 120ms
+   Reload env: .env.local
+ ✓ Compiled in 1639ms (754 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ✓ Compiled in 13.1s (768 modules)
+ ✓ Compiled in 199ms (354 modules)
+ ✓ Compiled in 6s (754 modules)
+ ✓ Compiled in 9.5s (354 modules)
+ ✓ Compiled in 967ms (354 modules)
+ ✓ Compiled in 411ms (354 modules)
+ ✓ Compiled in 780ms (354 modules)
+ ✓ Compiled in 744ms (354 modules)
+ ✓ Compiled in 828ms (354 modules)
+ ✓ Compiled in 479ms (354 modules)
+ ✓ Compiled in 1486ms (354 modules)
+ ✓ Compiled in 881ms (354 modules)
+ ✓ Compiled in 1152ms (354 modules)
+ ✓ Compiled in 634ms (354 modules)
+ ✓ Compiled in 787ms (354 modules)
+ ✓ Compiled in 439ms (354 modules)
+ ✓ Compiled in 559ms (354 modules)
+ ✓ Compiled in 445ms (354 modules)
+ ✓ Compiled in 712ms (354 modules)
+ ✓ Compiled in 620ms (354 modules)
+ ✓ Compiled in 943ms (354 modules)
+ ✓ Compiled in 468ms (354 modules)
+ ✓ Compiled in 637ms (354 modules)
+ ✓ Compiled in 617ms (354 modules)
+ ✓ Compiled in 1026ms (354 modules)
+ ✓ Compiled in 731ms (354 modules)
+ ✓ Compiled in 584ms (354 modules)
+ ✓ Compiled in 485ms (354 modules)
+ ✓ Compiled in 348ms (354 modules)
+ ✓ Compiled in 444ms (354 modules)
+ ✓ Compiled in 357ms (354 modules)
+ ✓ Compiled in 515ms (354 modules)
+ ✓ Compiled in 522ms (354 modules)
+ ✓ Compiled in 432ms (354 modules)
+ ✓ Compiled in 817ms (354 modules)
+ ✓ Compiled in 464ms (354 modules)
+ ✓ Compiled in 702ms (354 modules)
+ ✓ Compiled in 315ms (354 modules)
+ ✓ Compiled in 494ms (354 modules)
+ ✓ Compiled in 455ms (354 modules)
+ ✓ Compiled in 502ms (354 modules)
+ ✓ Compiled in 457ms (354 modules)
+ ✓ Compiled in 358ms (354 modules)
+ ✓ Compiled in 456ms (354 modules)
+ ✓ Compiled in 327ms (354 modules)
+ ✓ Compiled in 336ms (354 modules)
+ ✓ Compiled in 493ms (354 modules)
+ ✓ Compiled in 507ms (354 modules)
+ ✓ Compiled in 375ms (354 modules)
+ ✓ Compiled in 563ms (354 modules)
+ ✓ Compiled in 918ms (354 modules)
+ ✓ Compiled in 494ms (354 modules)
+ ✓ Compiled in 431ms (354 modules)
+ ✓ Compiled in 1195ms (354 modules)
+ ✓ Compiled in 691ms (354 modules)
+ ✓ Compiled in 529ms (354 modules)
+ ✓ Compiled in 543ms (354 modules)
+ ✓ Compiled in 830ms (354 modules)
+ ✓ Compiled in 473ms (354 modules)
+ ✓ Compiled in 731ms (354 modules)
+ ✓ Compiled in 360ms (354 modules)
+ ✓ Compiled in 398ms (354 modules)
+ ✓ Compiled in 615ms (354 modules)
+ ✓ Compiled in 378ms (354 modules)
+ ✓ Compiled in 391ms (354 modules)
+ ✓ Compiled in 376ms (354 modules)
+ ✓ Compiled in 367ms (354 modules)
+ ✓ Compiled in 679ms (354 modules)
+ ✓ Compiled in 511ms (354 modules)
+ ✓ Compiled in 386ms (354 modules)
+ ✓ Compiled in 967ms (354 modules)
+ ✓ Compiled in 693ms (354 modules)
+ ✓ Compiled in 566ms (354 modules)
+ ✓ Compiled in 308ms (354 modules)
+ ✓ Compiled in 406ms (354 modules)
+ ✓ Compiled in 497ms (354 modules)
+ ✓ Compiled in 458ms (354 modules)
+ ✓ Compiled in 558ms (354 modules)
+ ✓ Compiled in 340ms (354 modules)
+ ✓ Compiled in 343ms (354 modules)
+ ✓ Compiled in 1222ms (768 modules)
+ ✓ Compiled in 1504ms (768 modules)
+ ✓ Compiled in 1669ms (354 modules)
+ ✓ Compiled in 292ms (354 modules)
+ ✓ Compiled in 498ms (354 modules)
+ ✓ Compiled in 366ms (354 modules)
+ ✓ Compiled in 3.3s (768 modules)
+ ✓ Compiled in 2.1s (768 modules)
+ ✓ Compiled in 369ms (354 modules)
+ ✓ Compiled in 1748ms (768 modules)
+ ✓ Compiled in 2s (768 modules)
+ ✓ Compiled in 726ms (354 modules)
+ ✓ Compiled in 665ms (354 modules)
+ ✓ Compiled in 676ms (354 modules)
+ ✓ Compiled in 814ms (354 modules)
+ ✓ Compiled in 758ms (354 modules)
+ ✓ Compiled in 554ms (354 modules)
+ ✓ Compiled in 687ms (354 modules)
+ ✓ Compiled in 679ms (354 modules)
+ ✓ Compiled in 809ms (354 modules)
+ ✓ Compiled in 838ms (354 modules)
+ ✓ Compiled in 2.7s (768 modules)
+ ✓ Compiled in 1849ms (768 modules)
+ ✓ Compiled in 1939ms (768 modules)
+ ✓ Compiled in 30.8s (768 modules)
+ ✓ Compiled in 5.9s (354 modules)
+ ✓ Compiled in 2.5s (754 modules)
+ ✓ Compiled in 1207ms (768 modules)
+ ✓ Compiled in 476ms (354 modules)
+ ✓ Compiled in 312ms (354 modules)
+ ✓ Compiled in 772ms (354 modules)
+ ✓ Compiled in 722ms (354 modules)
+ ✓ Compiled in 850ms (354 modules)
+ ✓ Compiled in 359ms (354 modules)
+ ✓ Compiled in 341ms (354 modules)
+ ✓ Compiled in 379ms (354 modules)
+ ✓ Compiled in 13s (768 modules)
+ ✓ Compiled in 1049ms (354 modules)
+ ✓ Compiled in 393ms (354 modules)
+ ✓ Compiled in 849ms (354 modules)
+ ✓ Compiled in 480ms (354 modules)
+ ✓ Compiled in 418ms (354 modules)
+ ✓ Compiled in 634ms (354 modules)
+ ✓ Compiled in 445ms (354 modules)
+ ✓ Compiled in 768ms (354 modules)
+ ✓ Compiled in 540ms (354 modules)
+ ✓ Compiled in 586ms (354 modules)
+ ✓ Compiled in 482ms (354 modules)
+ ✓ Compiled in 463ms (354 modules)
+ ✓ Compiled in 1806ms (354 modules)
+ ✓ Compiled in 805ms (354 modules)
+ ✓ Compiled in 584ms (354 modules)
+ ✓ Compiled in 461ms (354 modules)
+ ✓ Compiled in 560ms (354 modules)
+ ✓ Compiled in 624ms (354 modules)
+ ✓ Compiled in 902ms (354 modules)
+ ✓ Compiled in 1530ms (354 modules)
+ ✓ Compiled in 1238ms (354 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/_not-found/page' in C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server for build dependencies doesn't lead to expected result 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found\page.js', but to 'Error: Can't resolve '../../../../.next/server/app/_not-found/page' in 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/_not-found/page (expected C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found\page.js)
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\require.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\utils.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\entries.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\entries.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\plugins\next-types-plugin\index.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\plugins\next-types-plugin\index.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack-config.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+ ✓ Compiled in 1428ms (354 modules)
+ ✓ Compiled in 1184ms (354 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/_not-found/page' in C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server for build dependencies doesn't lead to expected result 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found\page.js', but to 'Error: Can't resolve '../../../../.next/server/app/_not-found/page' in 'C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/_not-found/page (expected C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\.next\server\app\_not-found\page.js)
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\require.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\require.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\utils.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\utils.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\handle-externals.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\handle-externals.js
+<w>  at file dependencies C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at file C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+<w>  at resolve commonjs C:\Users\user\Documents\AI_GENERATIVE_LEARNING_DOCUMENT\HyrateWatch\frontend\node_modules\next\dist\build\webpack\loaders\next-swc-loader.js
+ ✓ Compiled in 677ms (354 modules)
+ ✓ Compiled in 1062ms (354 modules)

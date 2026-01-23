@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base font size increase for entire application */
+html {
+  font-size: 18px; /* Increased from default 16px */
+}
+
+body {
+  @apply bg-gray-900 text-gray-100;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+}
+
+/* Ensure minimum font sizes throughout the app */
+@layer base {
+  html {
+    @apply text-lg;
+  }
+
+  p, span, label, input, select, textarea, button {
+    @apply text-base;
+  }
+
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+
+  h4 {
+    @apply text-lg font-medium;
+  }
+
+  /* Small text should still be readable */
+  .text-xs {
+    font-size: 0.875rem !important; /* 14px instead of 12px */
+  }
+
+  .text-sm {
+    font-size: 1rem !important; /* 16px instead of 14px */
+  }
+}
+
+/* ============================================
+   GLOBAL INPUT VISIBILITY FIX
+   Ensures all input text is clearly visible
+   ============================================ */
+
+/* Base input styling - HIGH CONTRAST TEXT */
+input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+select,
+textarea {
+  color: #111827 !important; /* gray-900 - dark text for visibility */
+  background-color: #ffffff !important; /* white background */
+  caret-color: #111827 !important; /* visible cursor */
+  -webkit-text-fill-color: #111827 !important; /* Override autofill text color */
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important; /* gray-500 - visible but lighter */
+  opacity: 1 !important;
+  -webkit-text-fill-color: #6b7280 !important;
+}
+
+/* Focus state - ensure text remains visible */
+input:focus,
+select:focus,
+textarea:focus {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2); /* primary ring */
+  border-color: #f59e0b !important; /* primary-500 */
+}
+
+/* Active/hover states */
+input:active,
+input:hover:not(:disabled),
+select:active,
+select:hover:not(:disabled),
+textarea:active,
+textarea:hover:not(:disabled) {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+/* Disabled state */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  color: #6b7280 !important; /* gray-500 */
+  background-color: #f3f4f6 !important; /* gray-100 */
+  cursor: not-allowed;
+  -webkit-text-fill-color: #6b7280 !important;
+}
+
+/* Autofill override - prevent browser from changing colors */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  caret-color: #111827 !important;
+}
+
+/* Date and time input specific fixes */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(0); /* Keep icons visible */
+  cursor: pointer;
+}
+
+/* Number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* Select dropdown arrow visibility */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Select options styling */
+select option {
+  color: #111827;
+  background-color: #ffffff;
+  padding: 8px;
+}
+
+/* Search input specific */
+input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* ============================================
+   UTILITY CLASSES FOR VISIBLE INPUTS
+   ============================================ */
+
+/* High contrast input class for explicit use */
+.input-visible {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db;
+  caret-color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+.input-visible:focus {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.input-visible::placeholder {
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+}
+
+/* ============================================
+   GLOBAL SCROLLING FIX
+   ============================================ */
+
+/* Remove ALL height constraints that block scrolling */
+html {
+  height: auto !important;
+  overflow-y: scroll !important;
+}
+
+body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+}
+
+/* Fix for dashboard and other main content areas */
+.overflow-auto {
+  overflow: auto !important;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+/* Ensure modals don't block page scroll when closed */
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* ============================================
+   ENHANCED INPUT VISIBILITY
+   ============================================ */
+
+/* Force text color on all input types */
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+textarea,
+select {
+  color: #1f2937 !important;
+  -webkit-text-fill-color: #1f2937 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Ensure number inputs show their values */
+input[type="number"]:not(:placeholder-shown),
+input[type="text"]:not(:placeholder-shown),
+input[type="date"]:not(:placeholder-shown),
+input[type="datetime-local"]:not(:placeholder-shown) {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Fix for Tailwind's default styles potentially overriding */
+.text-gray-900 {
+  color: #111827 !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
