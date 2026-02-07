@@ -26,7 +26,7 @@ import GenerateReportModal from "./GenerateReportModal";
 import SearchPanel from "./SearchPanel";
 import HelpPanel from "./HelpPanel";
 
-export default function Header() {
+export default function Header({ onDataRefresh }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -348,7 +348,7 @@ export default function Header() {
       </header>
 
       {/* Modals */}
-      <AddReadingModal isOpen={showAddReading} onClose={() => setShowAddReading(false)} />
+      <AddReadingModal isOpen={showAddReading} onClose={() => setShowAddReading(false)} onSuccess={onDataRefresh} />
       <GenerateReportModal isOpen={showGenerateReport} onClose={() => setShowGenerateReport(false)} />
       <SearchPanel isOpen={showSearch} onClose={() => setShowSearch(false)} />
       <HelpPanel isOpen={showHelp} onClose={() => setShowHelp(false)} />

@@ -14,8 +14,9 @@ import {
   Eye
 } from "lucide-react";
 import { useMode } from "@/src/contexts/ModeContext";
+import api from "@/src/lib/api";
 
-export default function AddReadingModal({ isOpen, onClose }) {
+export default function AddReadingModal({ isOpen, onClose, onSuccess }) {
   const { mode } = useMode();
   const [formData, setFormData] = useState({
     temperature: "",
@@ -82,10 +83,26 @@ export default function AddReadingModal({ isOpen, onClose }) {
     setSubmitting(true);
     setSubmitResult(null);
 
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setSubmitResult({ type: "success", message: "Reading added successfully" });
+      const payload = {
+        mode: mode,
+        temperature: parseFloat(formData.temperature),
+        pressure: parseFloat(formData.pressure),
+        flow_rate: formData.flowRate ? parseFloat(formData.flowRate) : 0
+      };
+
+      const response = await api.post("/sensors/add", payload);
+      console.log("Sensor reading added:", response.data);
+
+      setSubmitResult({
+        type: "success",
+        message: `Reading added successfully! Hydrate Risk: ${response.data.hydrate_risk?.toFixed(1) || 0}%`
+      });
+
+      // Trigger dashboard refresh
+      if (onSuccess) {
+        onSuccess();
+      }
 
       // Reset form after success
       setTimeout(() => {
@@ -97,10 +114,16 @@ export default function AddReadingModal({ isOpen, onClose }) {
           notes: ""
         });
         setSubmitResult(null);
+        setGeneratedReading(null);
+        setShowPreview(false);
         onClose();
       }, 1500);
     } catch (error) {
-      setSubmitResult({ type: "error", message: "Failed to add reading" });
+      console.error("Failed to add reading:", error);
+      setSubmitResult({
+        type: "error",
+        message: error.response?.data?.detail || "Failed to add reading"
+      });
     } finally {
       setSubmitting(false);
     }

@@ -20,7 +20,7 @@ import api from "@/src/lib/api";
 import { AlertTriangle, RefreshCw, LogIn, Ship, Factory } from "lucide-react";
 
 function DashboardContent() {
-  const { data, loading, error } = useSensorData(5000);
+  const { data, loading, error, refetch } = useSensorData(5000);
   const { mode } = useMode();
   const [historyData, setHistoryData] = useState([]);
   const [alerts, setAlerts] = useState([]);
@@ -70,7 +70,7 @@ function DashboardContent() {
       <div className="flex min-h-screen bg-dashboard-bg">
         <Sidebar systemHealth={systemHealth} />
         <div className="flex-1 flex flex-col">
-          <Header />
+          <Header onDataRefresh={refetch} />
           <main className="flex-1 p-6 flex items-center justify-center">
             <div className="text-center">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
@@ -86,7 +86,7 @@ function DashboardContent() {
     <div className="flex min-h-screen bg-dashboard-bg">
       <Sidebar systemHealth={systemHealth} />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header />
+        <Header onDataRefresh={refetch} />
         <main className="flex-1 p-6 overflow-auto">
           <div className="space-y-6">
             {/* Page Title - Mode Aware */}
@@ -206,7 +206,7 @@ function DashboardContent() {
             {/* Simulation Input - File Upload - CENTERED */}
             <div className="flex justify-center">
               <div className="w-full max-w-3xl">
-                <FileUpload />
+                <FileUpload onUploadSuccess={refetch} />
               </div>
             </div>
 

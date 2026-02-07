@@ -6,10 +6,50 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.user import User
 from app.models.sensor import SensorReading
-from app.schemas.sensor import SensorReadingResponse
+from app.schemas.sensor import SensorReadingResponse, SensorReadingCreate
 from app.services.risk_engine import calculate_hydrate_risk
 
 router = APIRouter()
+
+
+@router.post("/add", response_model=SensorReadingResponse)
+def add_sensor_reading(
+    reading: SensorReadingCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Add a single sensor reading manually."""
+    if reading.mode not in ["offshore", "onshore"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Mode must be 'offshore' or 'onshore'"
+        )
+
+    sensor = SensorReading(
+        mode=reading.mode,
+        temperature=reading.temperature,
+        pressure=reading.pressure,
+        flow_rate=reading.flow_rate
+    )
+    db.add(sensor)
+    db.commit()
+    db.refresh(sensor)
+
+    risk = calculate_hydrate_risk(
+        sensor.temperature,
+        sensor.pressure,
+        sensor.flow_rate
+    )
+
+    return SensorReadingResponse(
+        id=sensor.id,
+        mode=sensor.mode,
+        temperature=sensor.temperature,
+        pressure=sensor.pressure,
+        flow_rate=sensor.flow_rate,
+        timestamp=sensor.timestamp,
+        hydrate_risk=risk
+    )
 
 
 @router.get("/latest/{mode}", response_model=SensorReadingResponse)
