@@ -1,0 +1,102 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  name            String
+  hashed_password String
+  is_active       Boolean  @default(true)
+  role            String   @default("user")
+
+  @@map("users")
+}
+
+model SensorReading {
+  id          Int          @id @default(autoincrement())
+  mode        String
+  temperature Float
+  pressure    Float
+  flow_rate   Float
+  timestamp   DateTime     @default(now())
+  predictions Prediction[]
+
+  @@map("sensor_readings")
+}
+
+model Prediction {
+  id           Int           @id @default(autoincrement())
+  sensor_id    Int
+  hydrate_risk Float
+  timestamp    DateTime      @default(now())
+  sensor       SensorReading @relation(fields: [sensor_id], references: [id], onDelete: Cascade)
+
+  @@map("predictions")
+}
+
+model AIKnowledgePost {
+  id                  Int       @id @default(autoincrement())
+  source_id           String?   @unique
+  source_type         String?
+  source_name         String?
+  source_url          String?
+  title               String
+  original_content    String?
+  summary             String?
+  key_insights        String?   // Stores serialized JSON array of strings
+  practical_takeaways String?   // Stores serialized JSON array of strings
+  why_it_matters      String?
+  content_type        String?
+  tags                String?   // Stores serialized JSON array of strings
+  relevance_score     Float     @default(0.0)
+  credibility_score   Float     @default(0.0)
+  author              String?
+  published_at        DateTime?
+  fetched_at          DateTime  @default(now())
+  processed_at        DateTime?
+  is_published        Boolean   @default(false)
+  is_featured         Boolean   @default(false)
+  view_count          Int       @default(0)
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @default(now())
+
+  @@map("ai_knowledge_posts")
+}
+
+model FeedSource {
+  id                   Int       @id @default(autoincrement())
+  name                 String    @unique
+  source_type          String
+  url                  String
+  is_active            Boolean   @default(true)
+  fetch_interval_hours Int       @default(24)
+  last_fetched_at      DateTime?
+  credibility_weight   Float     @default(0.5)
+  config               String?   // Stores serialized JSON config object
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @default(now())
+
+  @@map("feed_sources")
+}
+
+model FeedFetchLog {
+  id              Int       @id @default(autoincrement())
+  source_id       Int?
+  source_name     String?
+  started_at      DateTime  @default(now())
+  completed_at    DateTime?
+  status          String?
+  items_fetched   Int       @default(0)
+  items_processed Int       @default(0)
+  items_published Int       @default(0)
+  error_message   String?
+  created_at      DateTime  @default(now())
+
+  @@map("feed_fetch_logs")
+}
