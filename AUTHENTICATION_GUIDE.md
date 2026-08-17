@@ -11,38 +11,37 @@ Use these credentials to login to the application:
 
 ### Backend Setup
 
+Needs a reachable PostgreSQL instance - either `docker compose up -d db`
+from the repo root, or your own Postgres with `DATABASE_URL` pointed at it.
+
 1. Navigate to the backend directory:
 ```bash
 cd backend
 ```
 
-2. Create a virtual environment (if not already created):
+2. Install dependencies:
 ```bash
-python -m venv venv
+npm install
 ```
 
-3. Activate the virtual environment:
-- Windows: `venv\Scripts\activate`
-- Mac/Linux: `source venv/bin/activate`
-
-4. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-5. Create `.env` file from example:
+3. Create `.env` file from example:
 ```bash
 cp .env.example .env
 ```
 
-6. Seed the database with test data:
+4. Apply migrations and generate the Prisma client:
 ```bash
-python seed_data.py
+npm run prisma:migrate
 ```
 
-7. Start the backend server:
+5. Seed the database with test data:
 ```bash
-uvicorn app.main:app --reload
+npm run seed
+```
+
+6. Start the backend server:
+```bash
+npm run dev
 ```
 
 The backend will be available at `http://localhost:8000`
@@ -87,7 +86,7 @@ The frontend will be available at `http://localhost:3000`
 If still failing, reseed the database:
 ```bash
 cd backend
-python seed_data.py
+npm run seed
 ```
 
 ### Issue: Registration fails
@@ -129,7 +128,7 @@ See the complete guide: [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md)
    ```
 4. Install dependencies:
    ```bash
-   cd backend && pip install -r requirements.txt
+   cd backend && npm install
    cd frontend && npm install
    ```
 5. Restart both servers
@@ -153,7 +152,7 @@ Expected response:
 {
   "message": "HydrateWatch API",
   "version": "1.0.0",
-  "docs": "/docs"
+  "docs": "/api/v1/health"
 }
 ```
 
@@ -166,9 +165,9 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 ### Issue: Browser shows CORS error
 
-**Check**: The backend CORS configuration in `backend/app/main.py` includes your frontend URL:
-```python
-allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"]
+**Check**: The backend CORS configuration in `backend/src/app.ts` includes your frontend URL:
+```ts
+const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000", ...];
 ```
 
 **Fix**: If using a different port or host, add it to the `allow_origins` list.
@@ -254,26 +253,19 @@ curl http://localhost:8000/api/v1/sensors/latest/offshore \
 ### Check existing users
 ```bash
 cd backend
-python -c "
-from app.database import SessionLocal
-from app.models.user import User
-db = SessionLocal()
-users = db.query(User).all()
-for u in users:
-    print(f'Email: {u.email}, Name: {u.name}')
-"
+npm run prisma:studio   # opens a browser UI against the Postgres db
 ```
 
 ### Reset database (CAUTION: Deletes all data)
 ```bash
 cd backend
-rm hydratewatch.db
-python seed_data.py
+npx prisma migrate reset   # drops, recreates, re-migrates, then runs the seed
 ```
 
 ## Security Notes
 
-1. The current `SECRET_KEY` in `backend/app/core/config.py` is hardcoded and should be changed for production
+1. `SECRET_KEY` (`backend/src/config/index.ts`) is required from the
+   environment in production - the server refuses to start without it
 2. Tokens are stored in browser localStorage (vulnerable to XSS attacks)
 3. No password reset functionality implemented
 4. No email verification implemented

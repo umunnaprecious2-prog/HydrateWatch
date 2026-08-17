@@ -72,7 +72,7 @@ cp .env.example .env
 
 3. Add your Google OAuth credentials to `.env`:
 ```
-DATABASE_URL=sqlite:///./hydratewatch.db
+DATABASE_URL=postgresql://hydratewatch:change-me@localhost:5432/hydratewatch?schema=public
 SECRET_KEY=your-secret-key-here-change-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
@@ -113,13 +113,10 @@ Replace `YOUR_CLIENT_ID_HERE` with the Client ID from Step 4.
 
 ```bash
 cd backend
-pip install -r requirements.txt
+npm install
 ```
 
-This will install the new Google OAuth packages:
-- `google-auth`
-- `google-auth-oauthlib`
-- `google-auth-httplib2`
+Google OAuth verification is already a dependency (`google-auth-library`).
 
 ### Frontend
 
@@ -137,8 +134,7 @@ This will install:
 
 ```bash
 cd backend
-# Make sure virtual environment is activated
-uvicorn app.main:app --reload
+npm run dev
 ```
 
 ### Frontend
@@ -299,4 +295,4 @@ Authenticate user with Google OAuth token.
 For issues with:
 - **Google OAuth setup**: Check [Google OAuth 2.0 documentation](https://developers.google.com/identity/protocols/oauth2)
 - **React OAuth library**: Check [@react-oauth/google docs](https://www.npmjs.com/package/@react-oauth/google)
-- **Backend implementation**: Check the code in `backend/app/api/v1/routes/auth.py`
+- **Backend implementation**: Check the code in `backend/src/controllers/auth.controller.ts` and `backend/src/routes/auth.routes.ts`
