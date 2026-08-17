@@ -16,7 +16,7 @@ import {
 import { useMode } from "@/src/contexts/ModeContext";
 import api from "@/src/lib/api";
 
-export default function FileUpload() {
+export default function FileUpload({ onUploadSuccess }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -109,6 +109,12 @@ export default function FileUpload() {
       setMessage({ type: "success", text: response.data.message || "Simulation completed successfully" });
       setSimulationComplete(true);
       setCurrentStep(3);
+
+      // Trigger immediate data refresh after successful upload
+      if (onUploadSuccess) {
+        console.log("Upload successful, triggering data refresh...");
+        onUploadSuccess();
+      }
     } catch (error) {
       setMessage({
         type: "error",
