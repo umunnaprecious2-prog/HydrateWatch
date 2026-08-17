@@ -3,16 +3,14 @@
 .env.local
 .env.*.local
 *.env
+!.env.example
 
-# Backend
+# Backend (Node/TypeScript/Prisma)
 backend/.env
 backend/.env.*
-backend/venv/
-backend/env/
-backend/__pycache__/
-backend/**/__pycache__/
-backend/*.pyc
-backend/hydratewatch.db
+!backend/.env.example
+backend/node_modules/
+backend/dist/
 backend/*.db
 backend/*.sqlite
 backend/*.sqlite3
