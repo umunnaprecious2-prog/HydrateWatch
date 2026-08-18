@@ -3,16 +3,17 @@
 Hydrate sensor monitoring app: risk predictions, sensor data upload/history,
 and an AI knowledge feed, behind email/password + Google OAuth auth.
 
-**Stack:** TypeScript + Express + Prisma on CockroachDB (backend), Next.js +
-React + Tailwind (frontend), Docker Compose for local orchestration, Render
-for hosting.
+**Stack:** TypeScript + Express + Prisma (backend) on [CockroachDB](https://www.cockroachlabs.com/),
+Next.js + React + Tailwind (frontend), Docker Compose for local
+orchestration, Render for hosting.
 
-## Database: CockroachDB
+## Database: CockroachDB, via Prisma's `postgresql` provider
 
-This app runs on [CockroachDB](https://www.cockroachlabs.com/), not plain
-Postgres - the Prisma schema uses `provider = "cockroachdb"`, which is
-required (Prisma generates CockroachDB-specific SQL, e.g. `STRING`/`INT4`
-types and sequence-based IDs, that a vanilla Postgres server will reject).
+The database is CockroachDB, but the Prisma schema uses
+`provider = "postgresql"`, not `"cockroachdb"`. CockroachDB speaks the
+Postgres wire protocol and accepts standard Postgres DDL (`SERIAL`, `TEXT`,
+etc.), so connecting to it as if it were Postgres works fine here and keeps
+the schema simpler (plain `autoincrement()`, no CockroachDB-specific SQL).
 
 You need a real CockroachDB instance to run this at all, even locally.
 [CockroachDB Cloud Serverless](https://cockroachlabs.cloud/) has a free tier

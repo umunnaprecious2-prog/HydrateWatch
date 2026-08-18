@@ -1,5 +1,9 @@
 datasource db {
-  provider = "cockroachdb"
+  // CockroachDB is Postgres-wire-compatible, so we connect to it with
+  // Prisma's plain postgresql provider rather than the cockroachdb one -
+  // simpler schema (autoincrement() instead of sequence(), TEXT instead
+  // of STRING) and no CockroachDB-specific SQL to worry about.
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +12,7 @@ generator client {
 }
 
 model User {
-  id              Int      @id @default(sequence())
+  id              Int      @id @default(autoincrement())
   email           String   @unique
   name            String
   hashed_password String
@@ -19,7 +23,7 @@ model User {
 }
 
 model SensorReading {
-  id          Int          @id @default(sequence())
+  id          Int          @id @default(autoincrement())
   mode        String
   temperature Float
   pressure    Float
@@ -31,7 +35,7 @@ model SensorReading {
 }
 
 model Prediction {
-  id           Int           @id @default(sequence())
+  id           Int           @id @default(autoincrement())
   sensor_id    Int
   hydrate_risk Float
   timestamp    DateTime      @default(now())
@@ -41,7 +45,7 @@ model Prediction {
 }
 
 model AIKnowledgePost {
-  id                  Int       @id @default(sequence())
+  id                  Int       @id @default(autoincrement())
   source_id           String?   @unique
   source_type         String?
   source_name         String?
@@ -70,7 +74,7 @@ model AIKnowledgePost {
 }
 
 model FeedSource {
-  id                   Int       @id @default(sequence())
+  id                   Int       @id @default(autoincrement())
   name                 String    @unique
   source_type          String
   url                  String
@@ -86,7 +90,7 @@ model FeedSource {
 }
 
 model FeedFetchLog {
-  id              Int       @id @default(sequence())
+  id              Int       @id @default(autoincrement())
   source_id       Int?
   source_name     String?
   started_at      DateTime  @default(now())
