@@ -7,13 +7,15 @@ and an AI knowledge feed, behind email/password + Google OAuth auth.
 Next.js + React + Tailwind (frontend), Docker Compose for local
 orchestration, Render for hosting.
 
-## Database: CockroachDB, via Prisma's `postgresql` provider
+## Database: CockroachDB
 
-The database is CockroachDB, but the Prisma schema uses
-`provider = "postgresql"`, not `"cockroachdb"`. CockroachDB speaks the
-Postgres wire protocol and accepts standard Postgres DDL (`SERIAL`, `TEXT`,
-etc.), so connecting to it as if it were Postgres works fine here and keeps
-the schema simpler (plain `autoincrement()`, no CockroachDB-specific SQL).
+The Prisma schema uses `provider = "cockroachdb"`. This is required, not a
+style choice - Prisma's schema engine actively detects a real CockroachDB
+server and refuses to run `migrate`/`db push` at all if the provider says
+`"postgresql"` (confirmed directly against a live cluster while building
+this). It does mean IDs use `@default(sequence())` instead of
+`autoincrement()` (CockroachDB only allows `autoincrement()` on `BigInt`),
+and the migration SQL uses CockroachDB's dialect (`STRING`/`INT4`/etc).
 
 You need a real CockroachDB instance to run this at all, even locally.
 [CockroachDB Cloud Serverless](https://cockroachlabs.cloud/) has a free tier
@@ -26,7 +28,16 @@ CockroachDB container. To create one:
    ```
    postgresql://<user>:<password>@<cluster-host>:26257/<database>?sslmode=verify-full
    ```
-3. Put that in `DATABASE_URL` (root `.env` for Docker, `backend/.env` for running the backend directly).
+3. Change `sslmode=verify-full` to **`sslmode=require`** and append **`&connect_timeout=30&pool_timeout=30`**. `verify-full` needs a local root CA bundle file that most machines don't have configured for Postgres tools by default (`require` still encrypts the connection, just skips CA-chain verification); the longer timeouts give Prisma's connection pool more room on a network path with any latency, since 10s is easy to trip over a public-internet round trip.
+4. Put the result in `DATABASE_URL` (root `.env` for Docker, `backend/.env` for running the backend directly).
+
+CockroachDB Cloud also auto-locks a table's schema right after creating it
+(for changefeed performance) - if you ever regenerate the initial migration
+from scratch, a straight `prisma migrate diff` won't include the necessary
+`ALTER TABLE ... SET (schema_locked = false);` unlock statements, and
+`migrate deploy` will fail partway through with a "schema change is
+disallowed because table is locked" error. The existing migration in this
+repo already has them; just something to know if you ever regenerate it.
 
 ## Run it with Docker
 

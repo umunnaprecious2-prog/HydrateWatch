@@ -26,7 +26,8 @@ services:
       - key: PORT
         value: 8000
       # CockroachDB connection string, e.g.:
-      # postgresql://<user>:<password>@<host>:26257/<db>?sslmode=verify-full
+      # postgresql://<user>:<password>@<host>:26257/<db>?sslmode=require&connect_timeout=30&pool_timeout=30
+      # (use sslmode=require, not verify-full - see README.md "Database: CockroachDB")
       - key: DATABASE_URL
         sync: false
       - key: SECRET_KEY
