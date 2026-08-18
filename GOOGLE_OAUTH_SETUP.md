@@ -72,7 +72,7 @@ cp .env.example .env
 
 3. Add your Google OAuth credentials to `.env`:
 ```
-DATABASE_URL=postgresql://hydratewatch:change-me@localhost:5432/hydratewatch?schema=public
+DATABASE_URL=postgresql://user:password@host:26257/hydratewatch?sslmode=verify-full
 SECRET_KEY=your-secret-key-here-change-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30

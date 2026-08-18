@@ -1,0 +1,64 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+#
+# Deploy: Render dashboard -> New -> Blueprint -> select this repo.
+# Render reads this file and creates both services below. A few env vars are
+# marked `sync: false`, meaning Render will prompt you to fill them in by
+# hand (secrets / values only known once the other service exists) instead
+# of storing them in this file. See README.md "Deploy to production" for
+# the exact values to paste in and in what order.
+#
+# If the Blueprint parser rejects a field here, Render's dashboard "New Web
+# Service" flow (pointed at the same Dockerfile / build+start commands) is
+# an equivalent manual fallback - the field names below are current as of
+# this writing but Render's schema does evolve.
+
+services:
+  - type: web
+    name: hydratewatch-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8000
+      # CockroachDB connection string, e.g.:
+      # postgresql://<user>:<password>@<host>:26257/<db>?sslmode=verify-full
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      # The frontend service's live URL, for CORS. Fill in after the
+      # frontend service below has deployed once.
+      - key: FRONTEND_URL
+        sync: false
+
+  - type: web
+    name: hydratewatch-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # The backend service's live URL (e.g. https://hydratewatch-backend.onrender.com).
+      # NEXT_PUBLIC_* vars are baked in at build time, so this must be set
+      # before the first build that should use it, and the service redeployed
+      # after changing it.
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_GOOGLE_CLIENT_ID
+        sync: false

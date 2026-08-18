@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id              Int      @id @default(autoincrement())
+  id              Int      @id @default(sequence())
   email           String   @unique
   name            String
   hashed_password String
@@ -19,7 +19,7 @@ model User {
 }
 
 model SensorReading {
-  id          Int          @id @default(autoincrement())
+  id          Int          @id @default(sequence())
   mode        String
   temperature Float
   pressure    Float
@@ -31,7 +31,7 @@ model SensorReading {
 }
 
 model Prediction {
-  id           Int           @id @default(autoincrement())
+  id           Int           @id @default(sequence())
   sensor_id    Int
   hydrate_risk Float
   timestamp    DateTime      @default(now())
@@ -41,7 +41,7 @@ model Prediction {
 }
 
 model AIKnowledgePost {
-  id                  Int       @id @default(autoincrement())
+  id                  Int       @id @default(sequence())
   source_id           String?   @unique
   source_type         String?
   source_name         String?
@@ -70,7 +70,7 @@ model AIKnowledgePost {
 }
 
 model FeedSource {
-  id                   Int       @id @default(autoincrement())
+  id                   Int       @id @default(sequence())
   name                 String    @unique
   source_type          String
   url                  String
@@ -86,7 +86,7 @@ model FeedSource {
 }
 
 model FeedFetchLog {
-  id              Int       @id @default(autoincrement())
+  id              Int       @id @default(sequence())
   source_id       Int?
   source_name     String?
   started_at      DateTime  @default(now())

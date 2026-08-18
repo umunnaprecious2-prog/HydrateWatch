@@ -5,7 +5,8 @@ import { errorHandler } from "./middlewares/error";
 
 const app = express();
 
-// Configure CORS to match FastAPI configuration
+// Allowed origins: local dev ports plus whatever the deployed frontend's
+// origin is (set FRONTEND_URL in the environment, e.g. the Render URL).
 const allowedOrigins = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
@@ -15,17 +16,21 @@ const allowedOrigins = [
   "http://127.0.0.1:3002",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
 ];
+const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
+      // Allow requests with no origin (server-to-server, curl, mobile apps).
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) !== -1) {
         return callback(null, true);
       }
-      return callback(null, true); // Fallback to allow all for debugging, or strict: callback(new Error('Not allowed by CORS'))
+      // In development, be permissive so ad-hoc local ports/tools aren't
+      // blocked; in production, only FRONTEND_URL and the list above.
+      return callback(isProduction ? new Error("Not allowed by CORS") : null, !isProduction);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

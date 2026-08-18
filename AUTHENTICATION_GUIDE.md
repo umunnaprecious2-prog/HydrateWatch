@@ -11,8 +11,8 @@ Use these credentials to login to the application:
 
 ### Backend Setup
 
-Needs a reachable PostgreSQL instance - either `docker compose up -d db`
-from the repo root, or your own Postgres with `DATABASE_URL` pointed at it.
+Needs a reachable CockroachDB instance - see README.md for how to spin up a
+free CockroachDB Cloud Serverless cluster and point `DATABASE_URL` at it.
 
 1. Navigate to the backend directory:
 ```bash
