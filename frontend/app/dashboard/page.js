@@ -27,7 +27,7 @@ function DashboardContent() {
 
   // Calculate system health based on hydrate risk
   const systemHealth = data?.hydrate_risk
-    ? Math.max(0, 100 - data.hydrate_risk)
+    ? Math.round(Math.max(0, 100 - data.hydrate_risk) * 10) / 10
     : 92;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function DashboardContent() {
 
   useEffect(() => {
     if (data && data.hydrate_risk) {
-      const risk = data.hydrate_risk;
+      const risk = Math.round(data.hydrate_risk * 100) / 100;
       const timestamp = new Date().toLocaleString();
 
       if (risk > 70) {

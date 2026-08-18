@@ -121,7 +121,7 @@ function TrackingContent() {
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
   const systemHealth = data?.hydrate_risk
-    ? Math.max(0, 100 - data.hydrate_risk)
+    ? Math.round(Math.max(0, 100 - data.hydrate_risk) * 10) / 10
     : 92;
 
   useEffect(() => {
