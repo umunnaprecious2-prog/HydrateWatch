@@ -6,7 +6,7 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# ---- Build ----
+# ---- Build (static export - see next.config.js output: "export") ----
 FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -18,17 +18,13 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 RUN npm run build
 
-# ---- Production runtime (standalone Next.js output) ----
-FROM base AS runtime
-ENV NODE_ENV=production
-# Docker sets HOSTNAME to the container ID by default, and Next's standalone
-# server binds to whatever HOSTNAME resolves to instead of all interfaces -
-# without this override it listens only on the container's own IP and is
-# unreachable through the published port.
-ENV HOSTNAME=0.0.0.0
-COPY --from=build /app/public ./public
-COPY --from=build /app/.next/standalone ./
-COPY --from=build /app/.next/static ./.next/static
-
+# ---- Production runtime: plain static file server ----
+# The app is fully static (no route handlers, middleware, or server-only
+# APIs - see next.config.js), so there's no Node process to run in
+# production; this container exists only for local docker-compose parity.
+# In production this same "out/" directory is deployed as a Render Static
+# Site (CDN-served, no server, no cold-start delay), not this Dockerfile.
+FROM nginx:alpine AS runtime
+COPY --from=build /app/out /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000
-CMD ["node", "server.js"]

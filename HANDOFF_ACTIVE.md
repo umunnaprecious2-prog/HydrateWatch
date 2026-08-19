@@ -6,9 +6,11 @@
 
 ## Current Status
 
-**Last Updated:** 2026-08-18
-**Session State:** Backend verified end-to-end against the real CockroachDB cluster (locally and via Docker). Not yet deployed to Render - that's the user's turn to click through the dashboard.
+**Last Updated:** 2026-08-19
+**Session State:** Live in production on Render (backend + frontend), verified end-to-end. Frontend just converted to a static export to kill Render free-tier cold-start delay.
 **Branch:** main
+
+**Live:** https://hydratewatch-frontend.onrender.com (frontend), https://hydratewatch-backend.onrender.com (backend, health at `/api/v1/health`)
 
 ---
 
@@ -55,12 +57,35 @@
   hanging with no outbound network, Prisma's engine needing OpenSSL on
   `node:20-alpine`, and Next's standalone server binding to Docker's
   auto-set `HOSTNAME` instead of all interfaces.
-- Added `render.yaml` (Render Blueprint: Docker backend + Node
-  frontend). Field names are correct as of when this was written but
-  unverified against Render's live parser (no Render API key available
-  this session) - if the Blueprint import fails on a field, the
-  dashboard's manual "New Web Service" flow is the fallback (documented
-  in README.md).
+- Added `render.yaml` (Render Blueprint) and **deployed both services live**
+  via the user clicking through the Render dashboard. Verified for real,
+  not just theoretically: CORS reflects the frontend's origin correctly,
+  the frontend's JS bundle has the right backend URL baked in (inspected
+  the actual deployed chunk), and a real registration request sent exactly
+  as the live frontend would send it round-tripped a user into production
+  CockroachDB.
+- Fixed a `tailwindcss`/`postcss`/`autoprefixer` bug that broke the
+  frontend's first Render build: they were `devDependencies`, and Render
+  sets `NODE_ENV=production` before `npm install`, which skips
+  `devDependencies` entirely - but `next build` still needs them. Moved
+  to `dependencies`.
+- Fixed a floating-point display bug (`32.400000000000069%` instead of
+  `32.4%`) in the dashboard's System Health widget and risk-alert
+  messages - `100 - hydrate_risk` wasn't rounded.
+- **Converted the frontend to a static export** (`next.config.js`:
+  `output: "export"`, `trailingSlash: true`) and switched
+  `hydratewatch-frontend` on Render from a Node Web Service to a Static
+  Site (`runtime: static`, `staticPublishPath: ./out`) - eliminates the
+  free-tier cold-start delay entirely (Static Sites are CDN-served,
+  always-on; Web Services sleep after 15 min idle and take ~30-60s to
+  wake). Confirmed every route was already prerendering as static (no
+  route handlers, middleware, dynamic segments, or `next/image` usage)
+  before making the switch, so nothing changed behaviorally. Updated
+  `frontend/Dockerfile` to serve the exported `out/` directory via nginx
+  instead of `next start` (kept for local `docker compose` parity only -
+  production hosting is Render's static site infra, not this Dockerfile).
+  Verified locally: raw static server, then the full nginx Docker image,
+  both serving all routes and a real 404 correctly.
 - Added `FRONTEND_URL` env var (backend CORS) and tightened CORS to
   reject unknown origins in production (it previously allowed any
   origin unconditionally, even with `credentials: true`).
@@ -69,17 +94,26 @@
   `claudee.md`, `prep.md`, `instruction.md` scaffolding.
 - Shipped a small frontend fix: sensor data now refetches immediately
   after a successful upload instead of waiting for the next poll.
+- Updated the CV (`CV_updated.pdf`) with a HydrateWatch project entry
+  matching the Gpron/Play entries' style, replacing a stale entry about
+  an older Streamlit prototype.
 
 ---
 
 ## Next Steps / Pending Tasks
 
-- [ ] User: Render dashboard -> New -> Blueprint -> connect this repo,
-      fill in the prompted env vars (DATABASE_URL is the same verified
-      connection string, just with `sslmode=require&connect_timeout=30&pool_timeout=30`),
-      deploy, then cross-wire `FRONTEND_URL` / `NEXT_PUBLIC_API_URL`
-      once both services have a live URL (see README.md "Deploy to
-      production").
+- [ ] User: on Render, change `hydratewatch-frontend` from a Web Service
+      to a Static Site (either delete and let a Blueprint re-sync
+      recreate it correctly, or check whether Render allows changing an
+      existing service's runtime in place - if not, delete + re-add via
+      Blueprint sync or "New Static Site" pointed at `frontend/`, build
+      command `npm install && npm run build`, publish dir `out`). Not
+      yet confirmed live - this was built and verified locally only,
+      the previous Render frontend deploy was still the Node Web
+      Service version.
+- [ ] Re-verify CORS/API calls against the live site once the frontend
+      redeploys as a static site (should be identical - it's the same
+      client-side JS, just served differently - but worth a real check).
 - [ ] Point real Google OAuth credentials at `backend/.env` / root
       `.env` if Google sign-in needs to work locally (placeholders
       only right now).
@@ -93,7 +127,7 @@
 | Issue | Status | Notes |
 |-------|--------|-------|
 | Intermittent P1001 on individual connection attempts to the CockroachDB cluster | Mitigated | Longer `connect_timeout`/`pool_timeout` in DATABASE_URL papers over it; root cause looked like network latency from this sandboxed dev environment specifically, not the cluster. Retried, mostly fine. |
-| render.yaml unverified against Render's live Blueprint parser | Open | No Render API key this session. Manual dashboard flow is the fallback if import fails. |
+| Frontend on Render is still the old Node Web Service, not yet switched to the new Static Site setup | Open | `render.yaml`/Dockerfile/next.config.js are updated and verified locally; the live Render service itself needs the user to actually change it (see Next Steps). |
 
 ---
 
@@ -123,7 +157,7 @@ npm run dev               # http://localhost:3000
 ```
 
 ### Production
-Not yet deployed. `render.yaml` + README.md "Deploy to production" cover the steps; needs the user to click through the Render dashboard (account-level actions Claude can't do on their behalf). The database side is already proven working - same connection string, just pasted into Render's env var instead of a local `.env`.
+Live: https://hydratewatch-frontend.onrender.com / https://hydratewatch-backend.onrender.com. `FRONTEND_URL` and `NEXT_PUBLIC_API_URL` are already cross-wired and verified. Pending: switching the frontend Render service from Web Service to Static Site (see Next Steps) - `render.yaml` already reflects the target state, the live service doesn't yet.
 
 ---
 

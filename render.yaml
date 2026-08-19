@@ -7,10 +7,12 @@
 # of storing them in this file. See README.md "Deploy to production" for
 # the exact values to paste in and in what order.
 #
-# If the Blueprint parser rejects a field here, Render's dashboard "New Web
-# Service" flow (pointed at the same Dockerfile / build+start commands) is
-# an equivalent manual fallback - the field names below are current as of
-# this writing but Render's schema does evolve.
+# If the Blueprint parser rejects a field here, Render's dashboard is an
+# equivalent manual fallback: "New Web Service" (pointed at
+# backend/Dockerfile) for the backend, "New Static Site" (build command
+# `npm install && npm run build`, publish directory `frontend/out`) for the
+# frontend. Field names below are current as of this writing but Render's
+# schema does evolve.
 
 services:
   - type: web
@@ -45,13 +47,18 @@ services:
       - key: FRONTEND_URL
         sync: false
 
+  # Static Site, not a Web Service: the app has no route handlers, middleware,
+  # or other server-only features (next.config.js has output: "export"), so
+  # it builds to plain HTML/CSS/JS with no Node process needed at runtime.
+  # Render serves static sites from a CDN with no idle spin-down, unlike free
+  # Web Services which sleep after 15 min and cost ~30-60s to wake back up on
+  # the next request - that wake-up delay was the point of this switch.
   - type: web
     name: hydratewatch-frontend
-    env: node
-    plan: free
+    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    staticPublishPath: ./out
     envVars:
       - key: NODE_ENV
         value: production
