@@ -7,7 +7,7 @@
 ## Current Status
 
 **Last Updated:** 2026-08-19
-**Session State:** Live in production on Render (backend + frontend), verified end-to-end. Frontend just converted to a static export to kill Render free-tier cold-start delay.
+**Session State:** Live in production on Render, fully verified. Frontend is now a Render Static Site (converted from a Node Web Service to kill the free-tier cold-start delay) - user deleted the old service and recreated it as a Static Site via the dashboard, reused the same `hydratewatch-frontend.onrender.com` hostname. Took a few minutes for Render's edge routing to pick up the reused hostname (`x-render-routing: no-server` until it did) - that was routing propagation, not a build/config problem; deploy itself succeeded on the first try.
 **Branch:** main
 
 **Live:** https://hydratewatch-frontend.onrender.com (frontend), https://hydratewatch-backend.onrender.com (backend, health at `/api/v1/health`)
@@ -102,18 +102,6 @@
 
 ## Next Steps / Pending Tasks
 
-- [ ] User: on Render, change `hydratewatch-frontend` from a Web Service
-      to a Static Site (either delete and let a Blueprint re-sync
-      recreate it correctly, or check whether Render allows changing an
-      existing service's runtime in place - if not, delete + re-add via
-      Blueprint sync or "New Static Site" pointed at `frontend/`, build
-      command `npm install && npm run build`, publish dir `out`). Not
-      yet confirmed live - this was built and verified locally only,
-      the previous Render frontend deploy was still the Node Web
-      Service version.
-- [ ] Re-verify CORS/API calls against the live site once the frontend
-      redeploys as a static site (should be identical - it's the same
-      client-side JS, just served differently - but worth a real check).
 - [ ] Point real Google OAuth credentials at `backend/.env` / root
       `.env` if Google sign-in needs to work locally (placeholders
       only right now).
@@ -127,7 +115,6 @@
 | Issue | Status | Notes |
 |-------|--------|-------|
 | Intermittent P1001 on individual connection attempts to the CockroachDB cluster | Mitigated | Longer `connect_timeout`/`pool_timeout` in DATABASE_URL papers over it; root cause looked like network latency from this sandboxed dev environment specifically, not the cluster. Retried, mostly fine. |
-| Frontend on Render is still the old Node Web Service, not yet switched to the new Static Site setup | Open | `render.yaml`/Dockerfile/next.config.js are updated and verified locally; the live Render service itself needs the user to actually change it (see Next Steps). |
 
 ---
 
@@ -157,7 +144,7 @@ npm run dev               # http://localhost:3000
 ```
 
 ### Production
-Live: https://hydratewatch-frontend.onrender.com / https://hydratewatch-backend.onrender.com. `FRONTEND_URL` and `NEXT_PUBLIC_API_URL` are already cross-wired and verified. Pending: switching the frontend Render service from Web Service to Static Site (see Next Steps) - `render.yaml` already reflects the target state, the live service doesn't yet.
+Live: https://hydratewatch-frontend.onrender.com (Static Site) / https://hydratewatch-backend.onrender.com (Web Service). `FRONTEND_URL` and `NEXT_PUBLIC_API_URL` cross-wired and verified. Fully done - frontend confirmed serving with `cf-cache-status: HIT`, correct routes, a real 404 for unknown paths, and zero console errors in a real browser check.
 
 ---
 
